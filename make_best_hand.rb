@@ -35,11 +35,11 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
 
   def get_x_number_of_high_cards(number_of_cards)
 
-    if number_of_cards > cards.length
+    if number_of_cards > @cards.length
       return "You've requested too many cards!"
     end
 
-    return fake_values.sort.reverse[1...number_of_cards]
+    return fake_values.sort.reverse[0...number_of_cards]
 
   end
 
@@ -48,9 +48,7 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
 
     pairs = []
 
-    sorted_values = fake_values.sort do |x,y|
-      y <=> x
-    end
+    sorted_values = fake_values.sort.reverse
 
     sorted_values.each_with_index do |value, index|
       if index >= (sorted_values.length - 1)
@@ -76,9 +74,7 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
 
     three_of_kind = []
 
-    sorted_values = fake_values.sort do |x,y|
-      y <=> x
-    end
+    sorted_values = fake_values.sort.reverse
 
     sorted_values.each_with_index do |value, index|
       if index >= (sorted_values.length - 2)
@@ -104,7 +100,7 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
     if fake_value_array.include?(14) && fake_value_array.include?(2) &&
        fake_value_array.include?(3) && fake_value_array.include?(4) &&
        fake_value_array.include?(5) && fake_value_array.include?(6) == false
-       return {highest_value: 5}
+       return [5]
     end
 
     sorted_array = fake_value_array.sort.reverse
@@ -116,11 +112,11 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
                                          curr_value - 2, curr_value - 3,
                                          curr_value - 4]
       if make_a_straight_with_curr_value == sorted_array[counter..counter + 4]
-        return {highest_value: curr_value}
+        return [curr_value]
       end
       counter += 1
     end
-    return {}
+    return []
   end
 
 
@@ -167,20 +163,18 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
 
   def four_of_a_kind?
 
-    sorted_values = fake_values.sort do |x,y|
-      y <=> x
-    end
+    sorted_values = fake_values.sort.reverse
 
     sorted_values.each_with_index do |value, index|
       if index >= (sorted_values.length - 3)
         break
       end
       if value == sorted_values[index + 1] && value == sorted_values[index + 2] && value == sorted_values[index + 3]
-        return value
+        return [value]
       end
     end
 
-    return nil
+    return []
 
   end
 
@@ -230,23 +224,23 @@ HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
   def find_best_hand
 
     if self.straight_flush? != {}
-        return {hierarchy_value: "STRAIGHT FLUSH", hierarchy_index: HIERARCHY.index("STRAIGHT FLUSH"), details: self.straight_flush?}
-    elsif self.four_of_a_kind? != nil
-      return {hierarchy_value: "4 OF A KIND", hierarchy_index: HIERARCHY.index("4 OF A KIND"), details: self.four_of_a_kind?}
+        return {hierarchy_value: "STRAIGHT FLUSH", hierarchy_index: HIERARCHY.index("STRAIGHT FLUSH"), details_array: [self.straight_flush?[:straight][:highest_value]], more_details: self.straight_flush?, player: self.get_player}
+    elsif self.four_of_a_kind? != []
+      return {hierarchy_value: "4 OF A KIND", hierarchy_index: HIERARCHY.index("4 OF A KIND"), details_array: self.four_of_a_kind?, more_details: nil, player: self.get_player}
     elsif self.full_house? != {}
-      return {hierarchy_value: "FULL HOUSE", hierarchy_index: HIERARCHY.index("FULL HOUSE"), details: self.full_house?}
+      return {hierarchy_value: "FULL HOUSE", hierarchy_index: HIERARCHY.index("FULL HOUSE"), details_array: [self.full_house?[:three_of_a_kind], self.full_house?[:pair]], more_details: self.full_house?, player: self.get_player}
     elsif self.flush? != {}
-      return {hierarchy_value: "FLUSH", hierarchy_index: HIERARCHY.index("FLUSH"), details: self.flush?}
-    elsif self.straight? != {}
-      return {hierarchy_value: "STRAIGHT", hierarchy_index: HIERARCHY.index("STRAIGHT"), details: self.straight?}
+      return {hierarchy_value: "FLUSH", hierarchy_index: HIERARCHY.index("FLUSH"), details_array: self.flush?.values[0], more_details: self.flush?.keys[0], player: self.get_player}
+    elsif self.straight? != []
+      return {hierarchy_value: "STRAIGHT", hierarchy_index: HIERARCHY.index("STRAIGHT"), details_array: self.straight?, more_details: nil, player: self.get_player}
     elsif self.three_of_a_kind? != []
-      return {hierarchy_value: "3 OF A KIND", hierarchy_index: HIERARCHY.index("3 OF A KIND"), details: self.three_of_a_kind?}
+      return {hierarchy_value: "3 OF A KIND", hierarchy_index: HIERARCHY.index("3 OF A KIND"), details_array: self.three_of_a_kind?, more_details: nil, player: self.get_player}
     elsif self.pair?.length == 2
-      return {hierarchy_value: "2 PAIR", hierarchy_index: HIERARCHY.index("2 PAIR"), details: self.pair?}
+      return {hierarchy_value: "2 PAIR", hierarchy_index: HIERARCHY.index("2 PAIR"), details_array: self.pair?, more_details: nil, player: self.get_player}
     elsif self.pair?.length == 1
-      return {hierarchy_value: "PAIR", hierarchy_index: HIERARCHY.index("PAIR"), details: self.pair?}
+      return {hierarchy_value: "PAIR", hierarchy_index: HIERARCHY.index("PAIR"), details_array: self.pair?, more_details: nil, player: self.get_player}
     else
-      return {hierarchy_value: "HIGH CARD", hierarchy_index: HIERARCHY.index("HIGH CARD"), details: self.get_x_number_of_high_cards(1)}
+      return {hierarchy_value: "HIGH CARD", hierarchy_index: HIERARCHY.index("HIGH CARD"), details_array: self.get_x_number_of_high_cards(5), more_details: nil, player: self.get_player}
     end
 
   end

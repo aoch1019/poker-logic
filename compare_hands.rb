@@ -44,7 +44,7 @@ class CompareHands
     best_hand_hierarchy = find_best_hand_hierarchy_index
 
     if tie?(best_hand_hierarchy) == false
-      return 
+      return
 
 
 
