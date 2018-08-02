@@ -187,8 +187,8 @@ puts ""
 puts "Comparing two hands..."
 puts ""
 
-
 hands_to_compare = CompareHands.new([best_hand2, best_hand3])
+hands_to_compare.display_all_hands
 hands_to_compare.find_winner
 hands_to_compare.display_winner
 
@@ -199,11 +199,12 @@ puts "*" * 80
 
 puts ""
 puts ""
-puts "Comparing two hands..."
+puts "Comparing four hands..."
 puts ""
 
 
-hands_to_compare2 = CompareHands.new([best_hand, best_hand4])
+hands_to_compare2 = CompareHands.new([best_hand, best_hand4, best_hand2, best_hand6])
+hands_to_compare2.display_all_hands
 hands_to_compare2.find_winner
 hands_to_compare2.display_winner
 
@@ -216,6 +217,7 @@ puts ""
 
 
 hands_to_compare3 = CompareHands.new([best_hand5, best_hand6])
+hands_to_compare3.display_all_hands
 hands_to_compare3.find_winner
 hands_to_compare3.display_winner
 
@@ -235,6 +237,7 @@ hand7.flop(card20,card21,card22)
 hand7.turn(card23)
 best_hand7 = make_hand7.find_best_hand
 hands_to_compare4 = CompareHands.new([best_hand7, best_hand4])
+hands_to_compare4.display_all_hands
 hands_to_compare4.find_winner
 hands_to_compare4.display_winner
 

@@ -2,8 +2,7 @@ require 'pry'
 
 class CompareHands
 
-  attr_reader :winner
-  attr_reader :best_hands_array
+  attr_reader :best_hands_array, :winner
 
 
   def initialize(best_hands_array)
@@ -45,14 +44,7 @@ class CompareHands
 
     winners_array = hands_array.select do |hands_hash|
       hands_hash[:details_array] == best_hand_values
-    end ## handles edge case of a split pot
-
-    # if winners_array.length > 1
-    #   tied_winners = hands_array.select do |hands_hash|
-    #     hands_hash == best_hand_hash
-    #   end
-    #   return winners_array ## handles edge case of a split pot
-    # end
+    end ## Turns answer into an array to handle edge case of a split pot (multiple winners)
 
     return winners_array
   end
@@ -70,31 +62,27 @@ class CompareHands
       winner.each do |hands_hash|
         puts "#{hands_hash[:player_hand].player.name}"
       end
+      puts "They both have a #{winner[0][:hierarchy_value]}"
     else
       puts "#{@winner[0][:player_hand].player.name} wins with a #{@winner[0][:hierarchy_value]}!"
       @winner[0][:player_hand].display
     end
   end
 
+  def tie?
+    winner.length > 1
+  end
 
-  # def tie?(hierarchy_index)
-  #   counter = 0
-  #
-  #   @best_hands_array.each do |best_hand_hash|
-  #     if best_hand_hash[:hierarchy_index] == hierarchy_index
-  #       counter += 1
-  #     end
-  #   end
-  #
-  #   if counter == 1
-  #     return true
-  #   else
-  #     return false
-  #   end
-  # end
-
-
-
-
+  def display_all_hands
+    @best_hands_array.each do |hands_hash|
+      puts "#{hands_hash[:player_hand].player.name}'s cards are"
+      puts ""
+      hands_hash[:player_hand].display
+      puts ""
+      puts "#{hands_hash[:player_hand].player.name} has a #{hands_hash[:hierarchy_value]}"
+      puts ""
+      puts "-" * 30
+    end
+  end
 
 end
