@@ -49,8 +49,8 @@ card9 = Card.new("Hearts", "King")
 card10 = Card.new("Diamonds", "Ace")
 card11 = Card.new("Diamonds", "Jack")
 
-och = Player.new("Och", card6, card7)
-hand2 = PlayerHand.new(och)
+marky = Player.new("marky", card6, card7)
+hand2 = PlayerHand.new(marky)
 
 
 hand2.flop(card8,card9,card10)
@@ -79,8 +79,8 @@ card15 = Card.new("Diamonds", "8")
 card16 = Card.new("Diamonds", "Ace")
 card17 = Card.new("Diamonds", "4")
 
-aoch = Player.new("Och", card12, card13)
-hand3 = PlayerHand.new(aoch)
+ricky = Player.new("Ricky", card12, card13)
+hand3 = PlayerHand.new(ricky)
 
 make_hand3 = MakeBestHand.new(hand3)
 hand3.flop(card14,card15,card16)
@@ -108,8 +108,8 @@ card21 = Card.new("Hearts", "9")
 card22 = Card.new("Clubs", "10")
 card23 = Card.new("Diamonds", "9")
 
-andy = Player.new("Och", card18, card19)
-hand4 = PlayerHand.new(andy)
+timmy = Player.new("Timmy", card18, card19)
+hand4 = PlayerHand.new(timmy)
 
 make_hand4 = MakeBestHand.new(hand4)
 hand4.flop(card20,card21,card22)
@@ -137,8 +137,8 @@ card27 = Card.new("Hearts", "4")
 card28 = Card.new("Clubs", "4")
 card29 = Card.new("Diamonds", "4")
 
-andyoch = Player.new("Och", card24, card25)
-hand5 = PlayerHand.new(andyoch)
+tommy = Player.new("Tommy", card24, card25)
+hand5 = PlayerHand.new(tommy)
 
 make_hand5 = MakeBestHand.new(hand5)
 hand5.flop(card26,card27,card28)
@@ -165,8 +165,8 @@ card33 = Card.new("Spades", "King")
 card34 = Card.new("Spades", "3")
 card35 = Card.new("Spades", "Ace")
 
-wangtron = Player.new("Och", card30, card31)
-hand6 = PlayerHand.new(wangtron)
+jonny = Player.new("Jonny", card30, card31)
+hand6 = PlayerHand.new(jonny)
 
 make_hand6 = MakeBestHand.new(hand6)
 hand6.flop(card32,card33,card34)
@@ -227,8 +227,14 @@ puts ""
 puts "Comparing two hands that are tied..."
 puts ""
 
+brian = Player.new("Brian", card18, card19)
+hand7 = PlayerHand.new(brian)
 
-hands_to_compare4 = CompareHands.new([best_hand4, best_hand4])
+make_hand7 = MakeBestHand.new(hand7)
+hand7.flop(card20,card21,card22)
+hand7.turn(card23)
+best_hand7 = make_hand7.find_best_hand
+hands_to_compare4 = CompareHands.new([best_hand7, best_hand4])
 hands_to_compare4.find_winner
 hands_to_compare4.display_winner
 

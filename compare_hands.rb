@@ -43,14 +43,18 @@ class CompareHands
       end
     end
 
-    if hands_array.count(best_hand_hash) > 1
-      tied_winners = hands_array.select do |hands_hash|
-        hands_hash == best_hand_hash
-      end
-      return tied_winners ## handles edge case of a split pot
-    end
+    winners_array = hands_array.select do |hands_hash|
+      hands_hash[:details_array] == best_hand_values
+    end ## handles edge case of a split pot
 
-    return [best_hand_hash]
+    # if winners_array.length > 1
+    #   tied_winners = hands_array.select do |hands_hash|
+    #     hands_hash == best_hand_hash
+    #   end
+    #   return winners_array ## handles edge case of a split pot
+    # end
+
+    return winners_array
   end
 
   def find_winner
