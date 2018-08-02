@@ -4,6 +4,7 @@ require_relative "./player"
 require_relative "./player_hand"
 require_relative "./make_best_hand"
 require_relative "./deck"
+require_relative "./compare_hands"
 
 
 # MAKE 2 PAIR
@@ -29,7 +30,7 @@ best_hand = make_hand.find_best_hand
 
 hand.display
 
-puts best_hand
+puts best_hand[:hierarchy_value]
 puts "*" * 80
 
 
@@ -59,7 +60,7 @@ best_hand2 = make_hand2.find_best_hand
 
 hand2.display
 
-puts best_hand2
+puts best_hand2[:hierarchy_value]
 puts "*" * 80
 
 
@@ -88,7 +89,7 @@ best_hand3 = make_hand3.find_best_hand
 
 hand3.display
 
-puts best_hand3
+puts best_hand3[:hierarchy_value]
 puts "*" * 80
 
 
@@ -117,7 +118,7 @@ best_hand4 = make_hand4.find_best_hand
 
 hand4.display
 
-puts best_hand4
+puts best_hand4[:hierarchy_value]
 puts "*" * 80
 
 
@@ -129,24 +130,24 @@ puts ""
 puts "Making a 4 of a kind..."
 puts ""
 
-card18 = Card.new("Diamonds", "10")
-card19 = Card.new("Spades", "4")
-card20 = Card.new("Diamonds", "Queen")
-card21 = Card.new("Hearts", "4")
-card22 = Card.new("Clubs", "4")
-card23 = Card.new("Diamonds", "4")
+card24 = Card.new("Diamonds", "10")
+card25 = Card.new("Spades", "4")
+card26 = Card.new("Diamonds", "Queen")
+card27 = Card.new("Hearts", "4")
+card28 = Card.new("Clubs", "4")
+card29 = Card.new("Diamonds", "4")
 
-andy = Player.new("Och", card18, card19)
-hand4 = PlayerHand.new(andy)
+andyoch = Player.new("Och", card24, card25)
+hand5 = PlayerHand.new(andyoch)
 
-make_hand4 = MakeBestHand.new(hand4)
-hand4.flop(card20,card21,card22)
-hand4.turn(card23)
-best_hand4 = make_hand4.find_best_hand
+make_hand5 = MakeBestHand.new(hand5)
+hand5.flop(card26,card27,card28)
+hand5.turn(card29)
+best_hand5 = make_hand5.find_best_hand
 
-hand4.display
+hand5.display
 
-puts best_hand4
+puts best_hand5[:hierarchy_value]
 puts "*" * 80
 
 
@@ -157,23 +158,78 @@ puts ""
 puts "Making a Straight Flush..."
 puts ""
 
-card18 = Card.new("Spades", "10")
-card19 = Card.new("Spades", "Jack")
-card20 = Card.new("Spades", "Queen")
-card21 = Card.new("Spades", "King")
-card22 = Card.new("Spades", "3")
-card23 = Card.new("Spades", "Ace")
+card30 = Card.new("Spades", "10")
+card31 = Card.new("Spades", "Jack")
+card32 = Card.new("Spades", "Queen")
+card33 = Card.new("Spades", "King")
+card34 = Card.new("Spades", "3")
+card35 = Card.new("Spades", "Ace")
 
-andy = Player.new("Och", card18, card19)
-hand4 = PlayerHand.new(andy)
+wangtron = Player.new("Och", card30, card31)
+hand6 = PlayerHand.new(wangtron)
 
-make_hand4 = MakeBestHand.new(hand4)
-hand4.flop(card20,card21,card22)
-hand4.turn(card23)
-make_hand4.straight_flush?
-best_hand4 = make_hand4.find_best_hand
+make_hand6 = MakeBestHand.new(hand6)
+hand6.flop(card32,card33,card34)
+hand6.turn(card35)
+best_hand6 = make_hand6.find_best_hand
 
-hand4.display
+hand6.display
 
-puts best_hand4
+puts best_hand6[:hierarchy_value]
+puts "*" * 80
+
+
+
+## COMPARE HANDS
+
+puts ""
+puts ""
+puts "Comparing two hands..."
+puts ""
+
+
+hands_to_compare = CompareHands.new([best_hand2, best_hand3])
+hands_to_compare.find_winner
+hands_to_compare.display_winner
+
+puts "*" * 80
+# binding.pry
+# 0
+
+
+puts ""
+puts ""
+puts "Comparing two hands..."
+puts ""
+
+
+hands_to_compare2 = CompareHands.new([best_hand, best_hand4])
+hands_to_compare2.find_winner
+hands_to_compare2.display_winner
+
+puts "*" * 80
+
+puts ""
+puts ""
+puts "Comparing two hands..."
+puts ""
+
+
+hands_to_compare3 = CompareHands.new([best_hand5, best_hand6])
+hands_to_compare3.find_winner
+hands_to_compare3.display_winner
+
+puts "*" * 80
+
+
+puts ""
+puts ""
+puts "Comparing two hands that are tied..."
+puts ""
+
+
+hands_to_compare4 = CompareHands.new([best_hand4, best_hand4])
+hands_to_compare4.find_winner
+hands_to_compare4.display_winner
+
 puts "*" * 80
