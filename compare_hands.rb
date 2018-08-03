@@ -54,6 +54,7 @@ class CompareHands
     best_hands = get_best_hands_by_index(largest_hierarchy_index)
     winner = compare_hand_details(best_hands)
     @winner = winner
+    return @winner
   end
 
   def display_winner

@@ -37,21 +37,34 @@ class Game
   end
 
   def flop
-
+    @cards_in_play << take_card
+    @cards_in_play << take_card
+    @cards_in_play << take_card
   end
 
   def turn
-
+    @cards_in_play << take_card
   end
 
   def river
+    @cards_in_play << take_card
+  end
 
+  def compare_player_hands
+    best_hands = []
+
+    @players.each do |player|
+      best_hand_hash = MakeBestHand.new(player, self).find_best_hand
+      best_hands << best_hand_hash
+    end
+
+    return CompareHands.new(best_hands).find_winner
   end
 
 end
 
-player = Player.new("Andrew")
-game = Game.new
-game.add_player(player)
-binding.pry
-0
+# player = Player.new("Andrew")
+# game = Game.new
+# game.add_player(player)
+# binding.pry
+# 0
