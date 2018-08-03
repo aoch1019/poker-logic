@@ -24,8 +24,28 @@ attr_accessor :cards
     return nil
   end
 
+  def shuffle
+    new_card_array = []
+
+    counter = 0
+    chosen_nums = []
+
+    until counter == 52
+      random_index = rand(0..51)
+      until chosen_nums.include?(random_index) == false
+        random_index = rand(0..counter)
+      end
+      chosen_nums << random_index
+      new_card_array << @cards[random_index]
+      counter += 1
+    end
+
+    return new_card_array
+  end
+
 end
 
-# my_deck = Deck.new
+# my_deck1 = Deck.new
+# my_deck2 = Deck.new
 # binding.pry
 # 0

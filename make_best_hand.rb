@@ -6,24 +6,31 @@ require_relative "./player_hand"
 
 class MakeBestHand
 
-attr_accessor :player_hand
-attr_reader :cards
+attr_accessor :cards
+attr_reader :game, :player
+
+@@all = []
 
 HIERARCHY = ["HIGH CARD", "PAIR", "2 PAIR", "3 OF A KIND",
             "STRAIGHT", "FLUSH", "FULL HOUSE", "4 OF A KIND",
             "STRAIGHT FLUSH"]
 
-  def initialize(player_hand)
-    @player_hand = player_hand
+  def initialize(player, game)
+    @player = player
+    @game = game
+    @@all = all
   end
 
-
-  def cards
-    player_hand.cards
+  def self.all
+    @@all
   end
 
-  def get_player
-    @player_hand.player
+  def player_and_game_cards
+    @cards << player.card1
+    @cards << player.card2
+    game.cards_in_play.each do |card|
+      @cards << card
+    end
   end
 
   def fake_values
