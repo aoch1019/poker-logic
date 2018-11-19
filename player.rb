@@ -3,15 +3,13 @@ require_relative "./card"
 
 class Player
 
-  attr_accessor :card1, :card2
-  attr_reader :name
+  attr_reader :name, :cards
 
   @@all = []
 
-  def initialize(name)
+  def initialize(name, card1, card2)
     @name = name
-    # @card1 = card1
-    # @card2 = card2
+    @cards = [card1, card2]
     @@all << self
   end
 
@@ -19,15 +17,11 @@ class Player
     @@all
   end
 
-  def join_game(game)
-    game.add_player(self)
+  def display_cards
+    @cards.map do |card|
+      card.display_card
+    end
   end
-
-  # def display_cards
-  #   @cards.map do |card|
-  #     card.display_card
-  #   end
-  # end
 
 end
 
